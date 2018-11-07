@@ -24,10 +24,8 @@ PolyShooter.prototype.checkFire = function() {
             var bullet = this.physics.add.sprite(this.player.x, this.player.y + 10, 'bullet');
             this.bullets.add(bullet);
             bullet.anims.play('fire');
-            // bullet.on("animationcomplete", function() {
-            // 	bullet.destroy();
-            // }, this);
             bullet.setVelocityY(-1000);
+            bullet.setMass(0);
             this.fireTick = 0;
         }
     }
@@ -52,6 +50,7 @@ PolyShooter.prototype.generateEnemy = function() {
         var enemy = this.physics.add.sprite(Math.floor(Math.random() * 437) + 262, -Math.floor(Math.random() * 150), 'enemy');
         this.enemies.add(enemy);
         enemy.setVelocityY(Math.floor(Math.random() * this.enemySpeedRange) + this.enemySpeed);
+        enemy.setMass(0);
         this.enemyTick = 0;
     }
 }
@@ -72,16 +71,23 @@ PolyShooter.prototype.checkEnemyReachBottom = function() {
 
 // Bullet and enemy collide callback function
 PolyShooter.prototype.hitEnemy = function(enemy, bullet) {
-    let diffX = bullet.x - enemy.x;
-    if (diffX <= -5) {
-        console.log('HIT ON THE LEFT!');
-    }
-    else if (diffX >= 5) {
-        console.log('HIT ON THE RIGHT!');
+    if (bullet.x < enemy.x) {
+        bullet.setVelocityY(0);
+        bullet.setOrigin(0.73,0.95)
+        enemy.setVelocityY(0);
+        bullet.anims.play('bulletLeft');
+        bullet.on("animationcomplete", function() {
+            this.bullets.remove(bullet, true, true);
+         }, this);
     }
     else {
-        console.log('HIT RIGHT AT THE CENTER!');
+        bullet.setVelocityY(0);
+        bullet.setOrigin(0.3,0.95)
+        enemy.setVelocityY(0);
+        bullet.anims.play('bulletRight');
+        bullet.on("animationcomplete", function() {
+            this.bullets.remove(bullet, true, true);
+         }, this);
     }
     this.enemies.remove(enemy, true, true);
-    this.bullets.remove(bullet, true, true);
-}
+}            
