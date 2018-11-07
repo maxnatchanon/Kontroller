@@ -24,7 +24,7 @@ PolyShooter.prototype.checkFire = function() {
             var bullet = this.physics.add.sprite(this.player.x, this.player.y + 10, 'bullet');
             this.bullets.add(bullet);
             bullet.anims.play('fire');
-            bullet.setVelocityY(-1000);
+            bullet.setVelocityY(-1200);
             bullet.setMass(0);
             this.fireTick = 0;
         }
@@ -73,7 +73,7 @@ PolyShooter.prototype.checkEnemyReachBottom = function() {
 PolyShooter.prototype.hitEnemy = function(enemy, bullet) {
     if (bullet.x < enemy.x) {
         bullet.setVelocityY(0);
-        bullet.setOrigin(0.73,0.95)
+        bullet.setOrigin(0.5,0.95)
         enemy.setVelocityY(0);
         bullet.anims.play('bulletLeft');
         bullet.on("animationcomplete", function() {
@@ -82,7 +82,7 @@ PolyShooter.prototype.hitEnemy = function(enemy, bullet) {
     }
     else {
         bullet.setVelocityY(0);
-        bullet.setOrigin(0.3,0.95)
+        bullet.setOrigin(0.5,0.95)
         enemy.setVelocityY(0);
         bullet.anims.play('bulletRight');
         bullet.on("animationcomplete", function() {

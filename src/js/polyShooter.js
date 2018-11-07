@@ -14,8 +14,8 @@ class PolyShooter extends Phaser.Scene {
 		this.load.image('bg', 'bg.png');
 		this.load.image('star', 'star.png')
 		this.load.spritesheet('bullet', 'bullet.png', { frameWidth: 10, frameHeight: 110 });
-		this.load.spritesheet('bulletLeft', 'animBulletLeft.png', { frameWidth: 68, frameHeight: 59 })
-		this.load.spritesheet('bulletRight', 'animBulletRight.png', { frameWidth: 68, frameHeight: 59 })
+		this.load.spritesheet('bulletLeft', 'animBulletLeft.png', { frameWidth: 100, frameHeight: 59 })
+		this.load.spritesheet('bulletRight', 'animBulletRight.png', { frameWidth: 100, frameHeight: 59 })
 		this.load.image('enemy', 'enemy.png');
 	}
 
@@ -56,7 +56,7 @@ class PolyShooter extends Phaser.Scene {
 			repeat: 0
 		});
 		this.fireTick = 0;
-		this.fireInterval = 20;
+		this.fireInterval = 25;
 
 		// Enemy
 		this.enemies = this.physics.add.group();
