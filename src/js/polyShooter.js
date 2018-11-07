@@ -1,4 +1,4 @@
-class polyShooter extends Phaser.Scene {
+class PolyShooter extends Phaser.Scene {
 
 	constructor() {
 		super({key:"polyShooter"});
@@ -47,7 +47,10 @@ class polyShooter extends Phaser.Scene {
 		// Enemy
 		this.enemies = this.physics.add.group();
 		this.enemyTick = 0;
-		this.enemyInterval = 100;
+		this.enemyInterval = 150;
+		this.enemySpeed = 70;
+		this.enemySpeedRange = 40;
+		this.physics.add.collider(this.enemies, this.bullets, this.hitEnemy, null, this);
 
 		// Input
 		this.left = this.input.keyboard.addKey(16);
@@ -61,73 +64,15 @@ class polyShooter extends Phaser.Scene {
 
 	update() {
 		// Move background star
-		this.star.tilePositionY -= 1.25;
+		this.star.tilePositionY -= 0.75;
 
 		this.checkPlayerMove();
 		this.checkFire();
-		this.clearBullet()
-		this.generateEnemy()
+		this.clearBullet();
+		this.generateEnemy();
+		this.checkEnemyReachBottom();
 
 		this.fireTick++;
 		this.enemyTick++;
 	}
-
-	// Check if player pressed move button
-	checkPlayerMove() {
-		if (this.left.isDown) {
-			this.player.setVelocityX(-250);
-			this.player.setTexture('playerLeft');
-			this.player.setOrigin(0.5, 0.475);
-		}
-		else if (this.right.isDown) {
-			this.player.setVelocityX(250);
-			this.player.setTexture('playerRight');
-			this.player.setOrigin(0.5, 0.475);
-		}
-		else {
-			this.player.setVelocityX(0);
-			this.player.setTexture('player');
-			this.player.setOrigin(0.5, 0.5);
-		}
-	}
-
-	// Check if player pressed fire button
-	checkFire() {
-		for (let index = 0; index < this.fire.length; index++) {
-			if (this.fire[index].isDown && this.fireTick > this.fireInterval) {
-				var bullet = this.physics.add.sprite(this.player.x, this.player.y + 10, 'bullet');
-				this.bullets.add(bullet);
-				bullet.anims.play('fire');
-				// bullet.on("animationcomplete", function() {
-				// 	bullet.destroy();
-				// }, this);
-				bullet.setVelocityY(-1000);
-				this.fireTick = 0;
-			}
-		}
-	}
-
-	// Clear bullets that are out of screen
-	clearBullet() {
-		var outBullets = []
-		this.bullets.children.iterate(function (bullet) {
-			if (bullet.y < -100) {
-				outBullets.push(bullet);
-			}
-		});
-
-		for (let index = 0; index < outBullets.length; index++) {
-			this.bullets.remove(outBullets[index], true, true);
-		}
-	}
-
-	generateEnemy() {
-		if (this.enemyTick > this.enemyInterval) {
-			var enemy = this.physics.add.sprite(Math.floor(Math.random() * 436) + 262, -50, 'enemy');
-			this.enemyTick = 0;
-			this.enemies.add(enemy);
-			enemy.setVelocityY(110);
-		}
-	}
-
 }

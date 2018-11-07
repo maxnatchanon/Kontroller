@@ -6,7 +6,7 @@ var config = {
 	physics: {
 		default: 'arcade'
 	},
-	scene: [polyShooter]
+	scene: [PolyShooter]
 }
 
 var game = new Phaser.Game(config)
