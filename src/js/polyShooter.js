@@ -16,7 +16,6 @@ class polyShooter extends Phaser.Scene {
 		this.load.spritesheet('bullet', 'bullet.png', { frameWidth: 10, frameHeight: 110 });
 	}
 
-
 	create() {
 		// Background
 		this.add.image(480, 270, 'bg');
@@ -42,7 +41,7 @@ class polyShooter extends Phaser.Scene {
 			repeat: 0
 		});
 		this.fireTick = 0;
-		this.fireInterval = 25;
+		this.fireInterval = 20;
 
 		// Input
 		this.left = this.input.keyboard.addKey('SHIFT')
@@ -53,14 +52,26 @@ class polyShooter extends Phaser.Scene {
 	}
 
 	update() {
-		this.star.tilePositionY -= 1;
+		this.star.tilePositionY -= 1.25;
+
+		this.checkPlayerMove();
+
+		this.checkFire();
+
+		this.clearBullet()
+
+		this.fireTick++;
+	}
+
+	// Check if player pressed move button
+	checkPlayerMove() {
 		if (this.left.isDown) {
-			this.player.setVelocityX(-180);
+			this.player.setVelocityX(-250);
 			this.player.setTexture('playerLeft');
 			this.player.setOrigin(0.5, 0.475);
 		}
 		else if (this.right.isDown) {
-			this.player.setVelocityX(180);
+			this.player.setVelocityX(250);
 			this.player.setTexture('playerRight');
 			this.player.setOrigin(0.5, 0.475);
 		}
@@ -69,7 +80,10 @@ class polyShooter extends Phaser.Scene {
 			this.player.setTexture('player');
 			this.player.setOrigin(0.5, 0.5);
 		}
+	}
 
+	// Check if player pressed fire button
+	checkFire() {
 		for (let index = 0; index < this.fire.length; index++) {
 			if (this.fire[index].isDown && this.fireTick > this.fireInterval) {
 				this.bullet = this.physics.add.sprite(this.player.x, this.player.y + 10, 'bullet');
@@ -79,9 +93,20 @@ class polyShooter extends Phaser.Scene {
 				this.fireTick = 0;
 			}
 		}
+	}
 
-		this.fireTick++;
+	// Remove bullets that are out of screen
+	clearBullet() {
+		var outBullets = []
+		this.bullets.children.iterate(function (bullet) {
+			if (bullet.y < -100) {
+				outBullets.push(bullet);
+			}
+		});
 
+		for (let index = 0; index < outBullets.length; index++) {
+			this.bullets.remove(outBullets[index], true, true);
+		}
 	}
 
 }
