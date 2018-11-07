@@ -14,6 +14,7 @@ class polyShooter extends Phaser.Scene {
 		this.load.image('bg', 'bg.png');
 		this.load.image('star', 'star.png')
 		this.load.spritesheet('bullet', 'bullet.png', { frameWidth: 10, frameHeight: 110 });
+		this.load.image('enemy', 'enemy.png');
 	}
 
 	create() {
@@ -43,24 +44,32 @@ class polyShooter extends Phaser.Scene {
 		this.fireTick = 0;
 		this.fireInterval = 20;
 
+		// Enemy
+		this.enemies = this.physics.add.group();
+		this.enemyTick = 0;
+		this.enemyInterval = 100;
+
 		// Input
-		this.left = this.input.keyboard.addKey('SHIFT')
-		this.right = this.input.keyboard.addKey('Z')
-		this.fire = [this.input.keyboard.addKey('QUOTES'),
-					this.input.keyboard.addKey('NUMPAD_FIVE'),
-					this.input.keyboard.addKey('FIVE')];
+		this.left = this.input.keyboard.addKey(16);
+		this.right = this.input.keyboard.addKey(90)
+		this.fire = [this.input.keyboard.addKey(53),
+					this.input.keyboard.addKey(222)];
+		this.switchSkillLeft = this.input.keyboard.addKey(192);
+		this.switchSkillRight = [this.input.keyboard.addKey(109),
+								this.input.keyboard.addKey(8)];
 	}
 
 	update() {
+		// Move background star
 		this.star.tilePositionY -= 1.25;
 
 		this.checkPlayerMove();
-
 		this.checkFire();
-
 		this.clearBullet()
+		this.generateEnemy()
 
 		this.fireTick++;
+		this.enemyTick++;
 	}
 
 	// Check if player pressed move button
@@ -86,16 +95,19 @@ class polyShooter extends Phaser.Scene {
 	checkFire() {
 		for (let index = 0; index < this.fire.length; index++) {
 			if (this.fire[index].isDown && this.fireTick > this.fireInterval) {
-				this.bullet = this.physics.add.sprite(this.player.x, this.player.y + 10, 'bullet');
-				this.bullets.add(this.bullet);
-				this.bullet.anims.play('fire', true);
-				this.bullet.setVelocityY(-1000);
+				var bullet = this.physics.add.sprite(this.player.x, this.player.y + 10, 'bullet');
+				this.bullets.add(bullet);
+				bullet.anims.play('fire');
+				// bullet.on("animationcomplete", function() {
+				// 	bullet.destroy();
+				// }, this);
+				bullet.setVelocityY(-1000);
 				this.fireTick = 0;
 			}
 		}
 	}
 
-	// Remove bullets that are out of screen
+	// Clear bullets that are out of screen
 	clearBullet() {
 		var outBullets = []
 		this.bullets.children.iterate(function (bullet) {
@@ -106,6 +118,15 @@ class polyShooter extends Phaser.Scene {
 
 		for (let index = 0; index < outBullets.length; index++) {
 			this.bullets.remove(outBullets[index], true, true);
+		}
+	}
+
+	generateEnemy() {
+		if (this.enemyTick > this.enemyInterval) {
+			var enemy = this.physics.add.sprite(Math.floor(Math.random() * 436) + 262, -50, 'enemy');
+			this.enemyTick = 0;
+			this.enemies.add(enemy);
+			enemy.setVelocityY(110);
 		}
 	}
 
