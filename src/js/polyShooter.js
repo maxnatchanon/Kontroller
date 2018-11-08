@@ -14,9 +14,9 @@ class PolyShooter extends Phaser.Scene {
 		this.load.image('bg', 'bg.png');
 		this.load.image('star', 'star.png')
 		this.load.spritesheet('bullet', 'bullet.png', { frameWidth: 10, frameHeight: 110 });
-		this.load.spritesheet('bulletLeft', 'animBulletLeft.png', { frameWidth: 100, frameHeight: 59 })
-		this.load.spritesheet('bulletRight', 'animBulletRight.png', { frameWidth: 100, frameHeight: 59 })
+		this.load.spritesheet('bulletHit', 'animBulletHit.png', { frameWidth: 100, frameHeight: 59 })
 		this.load.image('enemy', 'enemy.png');
+		this.load.spritesheet('enemyHit', 'animEnemyHit.png', { frameWidth: 100, frameHeight: 69 })
 	}
 
 	create() {
@@ -40,19 +40,13 @@ class PolyShooter extends Phaser.Scene {
 		this.anims.create({
 			key: 'fire',
 			frames: this.anims.generateFrameNumbers('bullet', { start: 0, end: 5 }),
-			frameRate: 70,
-			repeat: 0
-		});
-		this.anims.create({
-			key: 'bulletLeft',
-			frames: this.anims.generateFrameNumbers('bulletLeft', { start: 0, end: 5 }),
 			frameRate: 60,
 			repeat: 0
 		});
 		this.anims.create({
-			key: 'bulletRight',
-			frames: this.anims.generateFrameNumbers('bulletRight', { start: 0, end: 5 }),
-			frameRate: 60,
+			key: 'bulletHit',
+			frames: this.anims.generateFrameNumbers('bulletHit', { start: 0, end: 5 }),
+			frameRate: 50,
 			repeat: 0
 		});
 		this.fireTick = 0;
@@ -60,11 +54,17 @@ class PolyShooter extends Phaser.Scene {
 
 		// Enemy
 		this.enemies = this.physics.add.group();
+		this.physics.add.collider(this.enemies, this.bullets, this.hitEnemy, null, this);
+		this.anims.create({
+			key: 'enemyHit',
+			frames: this.anims.generateFrameNumbers('enemyHit', { start: 0, end: 5 }),
+			frameRate: 50,
+			repeat: 0
+		});
 		this.enemyTick = 0;
 		this.enemyInterval = 150;
 		this.enemySpeed = 70;
 		this.enemySpeedRange = 40;
-		this.physics.add.collider(this.enemies, this.bullets, this.hitEnemy, null, this);
 
 		// Input
 		this.left = this.input.keyboard.addKey(16);

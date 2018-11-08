@@ -74,20 +74,33 @@ PolyShooter.prototype.hitEnemy = function(enemy, bullet) {
     if (bullet.x < enemy.x) {
         bullet.setVelocityY(0);
         bullet.setOrigin(0.5,0.95)
-        enemy.setVelocityY(0);
-        bullet.anims.play('bulletLeft');
+        bullet.anims.play('bulletHit');
+        this.bullets.remove(bullet, false, false);
         bullet.on("animationcomplete", function() {
-            this.bullets.remove(bullet, true, true);
-         }, this);
+            bullet.destroy(true, false);
+        }, this);
+        enemy.setVelocityY(0);
+        enemy.anims.play('enemyHit');
+        enemy.setScale(-1,1);
+        this.enemies.remove(enemy, false, false);
+        enemy.on("animationcomplete", function() {
+            enemy.destroy(true, false);
+        }, this);
     }
     else {
         bullet.setVelocityY(0);
         bullet.setOrigin(0.5,0.95)
-        enemy.setVelocityY(0);
-        bullet.anims.play('bulletRight');
+        bullet.anims.play('bulletHit');
+        bullet.setScale(-1,1);
+        this.bullets.remove(bullet, false, false);
         bullet.on("animationcomplete", function() {
-            this.bullets.remove(bullet, true, true);
-         }, this);
+            bullet.destroy(true, false);
+        }, this);
+        enemy.setVelocityY(0);
+        enemy.anims.play('enemyHit');
+        this.enemies.remove(enemy, false, false);
+        enemy.on("animationcomplete", function() {
+            enemy.destroy(true, false);
+        }, this);
     }
-    this.enemies.remove(enemy, true, true);
 }            
