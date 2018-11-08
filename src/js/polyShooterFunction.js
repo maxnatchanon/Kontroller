@@ -93,14 +93,16 @@ PolyShooter.prototype.hitEnemy = function(enemy, bullet) {
         bullet.anims.play('bulletHit');
         bullet.setScale(-1,1);
         this.bullets.remove(bullet, false, false);
-        bullet.on("animationcomplete", function() {
+        bullet.on('animationcomplete', function() {
             bullet.destroy(true, false);
         }, this);
         enemy.setVelocityY(0);
         enemy.anims.play('enemyHit');
         this.enemies.remove(enemy, false, false);
-        enemy.on("animationcomplete", function() {
+        enemy.on('animationcomplete', function() {
             enemy.destroy(true, false);
         }, this);
     }
+    this.currentScore++;
+    this.scoreText.setText(this.currentScore);
 }            
