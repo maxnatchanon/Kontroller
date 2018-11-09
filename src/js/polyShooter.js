@@ -53,7 +53,7 @@ class PolyShooter extends Phaser.Scene {
 			repeat: 0
 		});
 		this.fireTick = 0;
-		this.fireInterval = 25;
+		this.fireInterval = 20;
 
 		// Enemy
 		this.enemies = this.physics.add.group();
@@ -64,11 +64,16 @@ class PolyShooter extends Phaser.Scene {
 			frameRate: 50,
 			repeat: 0
 		});
-		this.enemyTick = 0;
-		this.enemyInterval = 150;
-		this.enemySpeed = 70;
-		this.enemySpeedRange = 40;
 
+		// Difficulty
+		this.currentLevel = 0;
+		this.enemyIntervalLevel = [150, 115, 90, 70, 55, 45, 35, 30];
+		this.enemySpeedLevel = [70, 80, 90, 95, 100, 105, 110, 120];
+		this.enemyTick = 0;
+		this.enemyInterval = this.enemyIntervalLevel[this.currentLevel];
+		this.enemySpeed = this.enemySpeedLevel[this.currentLevel];
+		this.enemySpeedRange = 40;
+		
 		// Text
 		this.scoreText = this.add.bitmapText(846, 70, 'scoreFont','0', 75);
 		this.scoreText.setOrigin(0.5,0.5);

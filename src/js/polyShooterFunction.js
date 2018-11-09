@@ -105,4 +105,9 @@ PolyShooter.prototype.hitEnemy = function(enemy, bullet) {
     }
     this.currentScore++;
     this.scoreText.setText(this.currentScore);
+    if (this.currentScore % 10 == 0) {
+        this.currentLevel += (this.currentLevel < 7) ? 1 : 0;
+        this.enemyInterval = this.enemyIntervalLevel[this.currentLevel];
+		this.enemySpeed = this.enemySpeedLevel[this.currentLevel];
+    }
 }            
