@@ -111,3 +111,15 @@ PolyShooter.prototype.hitEnemy = function(enemy, bullet) {
 		this.enemySpeed = this.enemySpeedLevel[this.currentLevel];
     }
 }            
+
+PolyShooter.prototype.reduceLifePoint = function() {
+    this.currentLifePoint--;
+    var life = this.lifes[this.currentLifePoint];
+    life.anims.play('lifeBreak');
+    life.on('animationcomplete', function() {
+        life.destroy(true, false);
+    });
+    if (this.currentLifePoint == 0) {
+        // TODO: End game
+    }
+}

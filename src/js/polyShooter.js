@@ -9,17 +9,23 @@ class PolyShooter extends Phaser.Scene {
 		this.load.image('player', 'player.png');
 		this.load.image('playerLeft', 'playerLeft.png');
 		this.load.image('playerRight', 'playerRight.png');
+
 		this.load.image('border', 'border.png');
 		this.load.image('wall', 'wall.png');
 		this.load.image('bg', 'bg.png');
 		this.load.image('star', 'star.png');
+
 		this.load.spritesheet('bullet', 'bullet.png', { frameWidth: 10, frameHeight: 110 });
 		this.load.spritesheet('bulletHit', 'animBulletHit.png', { frameWidth: 100, frameHeight: 59 });
+
 		this.load.image('enemy', 'enemy.png');
 		this.load.spritesheet('enemyHit', 'animEnemyHit.png', { frameWidth: 100, frameHeight: 69 });
+
 		this.load.bitmapFont('scoreFont', '../font/scoreFont.png', '../font/scoreFont.fnt');
 		this.load.bitmapFont('titleFont', '../font/titleFont.png', '../font/titleFont.fnt');
 		this.load.bitmapFont('gameFont', '../font/gameFont.png', '../font/gameFont.fnt')
+
+		this.load.spritesheet('life', 'animLifeBreak.png', { frameWidth: 60, frameHeight: 120 });
 	}
 
 	create() {
@@ -80,6 +86,19 @@ class PolyShooter extends Phaser.Scene {
 		this.currentScore = 0;
 		this.title = this.add.bitmapText(12, 28, 'titleFont','Kontroller', 18);
 		this.gameTitle = this.add.bitmapText(9, 48, 'gameFont','PolyShooter', 35);
+
+		// Life
+		this.lifes = [];
+		this.lifes.push(this.physics.add.sprite(48, 270, 'life'));
+		this.lifes.push(this.physics.add.sprite(113, 270, 'life'));
+		this.lifes.push(this.physics.add.sprite(178, 270, 'life'));
+		this.currentLifePoint = 3;
+		this.anims.create({
+			key: 'lifeBreak',
+			frames: this.anims.generateFrameNumbers('life', { start: 0, end: 5 }),
+			frameRate: 40,
+			repeat: 0
+		});
 
 		// Input
 		this.left = this.input.keyboard.addKey(16);
