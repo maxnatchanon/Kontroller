@@ -63,7 +63,7 @@ class PolyShooter extends Phaser.Scene {
 
 		// Enemy
 		this.enemies = this.physics.add.group();
-		this.physics.add.collider(this.enemies, this.bullets, this.hitEnemy, null, this);
+		this.physics.add.collider(this.enemies, this.bullets, this.bulletHitEnemy, null, this);
 		this.anims.create({
 			key: 'enemyHit',
 			frames: this.anims.generateFrameNumbers('enemyHit', { start: 0, end: 5 }),
@@ -119,6 +119,7 @@ class PolyShooter extends Phaser.Scene {
 		this.clearBullet();
 		this.generateEnemy();
 		this.checkEnemyReachBottom();
+		this.checkEnemyCollidePlayer();
 
 		this.fireTick++;
 		this.enemyTick++;

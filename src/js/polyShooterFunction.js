@@ -59,18 +59,18 @@ PolyShooter.prototype.generateEnemy = function() {
 PolyShooter.prototype.checkEnemyReachBottom = function() {
     var reachedEnemies = [];
     this.enemies.children.iterate(function (enemy) {
-        if (enemy.y > 540 + 40) {
-            // TODO: Reduce player's life by 1
+        if (enemy.y > 540 + 40) { 
             reachedEnemies.push(enemy);
         }
     });
     for (let index = 0; index < reachedEnemies.length; index++) {
         this.enemies.remove(reachedEnemies[index], true, true);
+        this.reduceLifePoint();
     }
 }
 
 // Bullet and enemy collide callback function
-PolyShooter.prototype.hitEnemy = function(enemy, bullet) {
+PolyShooter.prototype.bulletHitEnemy = function(enemy, bullet) {
     if (bullet.x < enemy.x) {
         bullet.setVelocityY(0);
         bullet.setOrigin(0.5,0.95)
@@ -79,13 +79,7 @@ PolyShooter.prototype.hitEnemy = function(enemy, bullet) {
         bullet.on("animationcomplete", function() {
             bullet.destroy(true, false);
         }, this);
-        enemy.setVelocityY(0);
-        enemy.anims.play('enemyHit');
-        enemy.setScale(-1,1);
-        this.enemies.remove(enemy, false, false);
-        enemy.on("animationcomplete", function() {
-            enemy.destroy(true, false);
-        }, this);
+        this.killEnemy(enemy, true);
     }
     else {
         bullet.setVelocityY(0);
@@ -96,12 +90,7 @@ PolyShooter.prototype.hitEnemy = function(enemy, bullet) {
         bullet.on('animationcomplete', function() {
             bullet.destroy(true, false);
         }, this);
-        enemy.setVelocityY(0);
-        enemy.anims.play('enemyHit');
-        this.enemies.remove(enemy, false, false);
-        enemy.on('animationcomplete', function() {
-            enemy.destroy(true, false);
-        }, this);
+        this.killEnemy(enemy, false);
     }
     this.currentScore++;
     this.scoreText.setText(this.currentScore);
@@ -110,8 +99,53 @@ PolyShooter.prototype.hitEnemy = function(enemy, bullet) {
         this.enemyInterval = this.enemyIntervalLevel[this.currentLevel];
 		this.enemySpeed = this.enemySpeedLevel[this.currentLevel];
     }
-}            
+}         
 
+// Check enemy and player collision
+PolyShooter.prototype.checkEnemyCollidePlayer = function() {
+    // Player and enemy body are both 40x40 pixel
+    let playerTop = this.player.y - 20;
+    let playerX = this.player.x;
+    let playerLeft = playerX - 20;
+    let playerRight = playerX + 20;
+    var collidedEnemies = [];
+    this.enemies.children.iterate(function (enemy) {
+        if (enemy.y + 20 >= playerTop) {
+            if (enemy.x + 20 >= playerLeft && enemy.x + 20 <= playerRight) { 
+                collidedEnemies.push([enemy, enemy.x > playerX]);
+            }
+            if (enemy.x - 20 >= playerLeft && enemy.x - 20 <= playerRight) { 
+                collidedEnemies.push([enemy, enemy.x > playerX]);
+            }
+        }
+    });
+    for (let index = 0; index < collidedEnemies.length; index++) {
+        this.killEnemy(collidedEnemies[index][0], collidedEnemies[index][1]);
+        this.reduceLifePoint();
+    }
+}
+
+PolyShooter.prototype.killEnemy = function(enemy, onRight) {
+    if (onRight) {
+        enemy.setVelocityY(0);
+        enemy.anims.play('enemyHit');
+        enemy.setScale(-1,1);
+        this.enemies.remove(enemy, false, false);
+        enemy.on("animationcomplete", function() {
+            enemy.destroy(true, false);
+        }, this);
+    }
+    else {
+        enemy.setVelocityY(0);
+        enemy.anims.play('enemyHit');
+        this.enemies.remove(enemy, false, false);
+        enemy.on('animationcomplete', function() {
+            enemy.destroy(true, false);
+        }, this);
+    }
+}
+
+// Reduce life point and end game if life point is 0
 PolyShooter.prototype.reduceLifePoint = function() {
     this.currentLifePoint--;
     var life = this.lifes[this.currentLifePoint];
