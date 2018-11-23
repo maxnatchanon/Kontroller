@@ -36,6 +36,7 @@ class MainGame extends Phaser.Scene {
 		this.load.image('redSkillCooldown', 'redSkillCooldown.png');
 		this.load.image('blueSkillCooldown', 'blueSkillCooldown.png');
 		this.load.image('yellowSkillCooldown', 'yellowSkillCooldown.png');
+		this.load.image('skillMask', 'skillMask.png');
 	}
 
 	create() {
@@ -125,6 +126,29 @@ class MainGame extends Phaser.Scene {
 			frameRate: 40,
 			repeat: 0
 		});
+		
+		// Skill
+		this.add.image(845, 195, 'redSkillCooldown');
+		this.add.image(845, 317, 'yellowSkillCooldown');
+		this.add.image(845, 439, 'blueSkillCooldown');
+		this.redSkill = this.add.image(845, 195, 'redSkill').setDepth(1);
+		this.yellowSkill = this.add.image(845, 317, 'yellowSkill').setDepth(1);
+		this.blueSkill = this.add.image(845, 439, 'blueSkill').setDepth(1);
+
+		this.redMaskShape = this.add.image(845, 195+43, 'skillMask').setVisible(false);
+		this.redMaskShape.setOrigin(0.5, 1);
+		this.redMask = this.redMaskShape.createBitmapMask();
+		this.redSkill.setMask(this.redMask);
+
+		this.yellowMaskShape = this.add.image(845, 317+43, 'skillMask').setVisible(false);
+		this.yellowMaskShape.setOrigin(0.5, 1);
+		this.yellowMask = this.yellowMaskShape.createBitmapMask();
+		this.yellowSkill.setMask(this.yellowMask);
+
+		this.blueMaskShape = this.add.image(845, 439+43, 'skillMask').setVisible(false);
+		this.blueMaskShape.setOrigin(0.5, 1);
+		this.blueMask = this.blueMaskShape.createBitmapMask();
+		this.blueSkill.setMask(this.blueMask);
 
 		// Input
 		this.left = this.input.keyboard.addKey(16);
