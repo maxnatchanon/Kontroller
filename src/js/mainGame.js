@@ -37,13 +37,14 @@ class MainGame extends Phaser.Scene {
 		this.load.image('blueSkillCooldown', 'blueSkillCooldown.png');
 		this.load.image('yellowSkillCooldown', 'yellowSkillCooldown.png');
 		this.load.image('skillMask', 'skillMask.png');
+		this.load.image('selectSkill', 'selectSkill.png');
 	}
 
 	create() {
 
 		// Background
-		this.add.image(480, 270, 'bg');
-		this.star = this.add.tileSprite(480, 270, 960, 1000, 'star');
+		this.add.image(480, 270, 'bg').setDepth(-10);
+		this.star = this.add.tileSprite(480, 270, 960, 1000, 'star').setDepth(-9);
 		this.sideGlow = this.physics.add.staticGroup();
 		this.sideGlow.create(293, 0, 'border').setOrigin(0,0).setScale(-1, 1).refreshBody();
 		this.sideGlow.create(667, 0, 'border').setOrigin(0,0).refreshBody();
@@ -128,6 +129,10 @@ class MainGame extends Phaser.Scene {
 		});
 		
 		// Skill
+		this.currentSkill = 0;
+		this.skillPos = [195, 317, 439];
+		this.skillBtnDown = null;
+
 		this.add.image(845, 195, 'redSkillCooldown');
 		this.add.image(845, 317, 'yellowSkillCooldown');
 		this.add.image(845, 439, 'blueSkillCooldown');
@@ -150,13 +155,15 @@ class MainGame extends Phaser.Scene {
 		this.blueMask = this.blueMaskShape.createBitmapMask();
 		this.blueSkill.setMask(this.blueMask);
 
+		this.selectSkill = this.add.image(845, 195, 'selectSkill').setDepth(-1);
+
 		// Input
 		this.left = this.input.keyboard.addKey(16);
 		this.right = this.input.keyboard.addKey(90)
 		this.fire = [this.input.keyboard.addKey(53),
 					this.input.keyboard.addKey(222)];
-		this.switchSkillLeft = this.input.keyboard.addKey(192);
-		this.switchSkillRight = [this.input.keyboard.addKey(109),
+		this.switchSkillUp = this.input.keyboard.addKey(192);
+		this.switchSkillDown = [this.input.keyboard.addKey(109),
 								this.input.keyboard.addKey(8)];
 		
 		// Game status
@@ -169,6 +176,7 @@ class MainGame extends Phaser.Scene {
 		if (this.isPlaying) {
 			this.checkPlayerMove();
 			this.checkFire();
+			this.checkSkillSwitch();
 			this.clearBullet();
 			this.generateEnemy();
 			this.checkEnemyReachBottom();
@@ -178,7 +186,6 @@ class MainGame extends Phaser.Scene {
 			this.enemyTick++;
 		}   
 		else {
-			
 			this.checkReset();
 		}
 	}
