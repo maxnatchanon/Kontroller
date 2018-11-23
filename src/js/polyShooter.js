@@ -23,16 +23,16 @@ class PolyShooter extends Phaser.Scene {
 		this.load.spritesheet('enemyHit', 'animEnemyHit.png', { frameWidth: 100, frameHeight: 69 });
 
 		this.load.bitmapFont('scoreFont', '../font/scoreFont.png', '../font/scoreFont.fnt');
-		this.load.bitmapFont('titleFont', '../font/titleFont.png', '../font/titleFont.fnt');
-		this.load.bitmapFont('gameFont', '../font/gameFont.png', '../font/gameFont.fnt')
 
 		this.load.spritesheet('life', 'animLifeBreak.png', { frameWidth: 60, frameHeight: 120 });
 
 		this.load.image('title', 'title.png');
 		this.load.image('gameoff', 'gameoff.png');
+		this.load.image('gameover', 'gameover.png');
 	}
 
 	create() {
+
 		// Background
 		this.add.image(480, 270, 'bg');
 		this.star = this.add.tileSprite(480, 270, 960, 1000, 'star');
@@ -101,7 +101,7 @@ class PolyShooter extends Phaser.Scene {
 		this.gameoff = this.add.image(12, 500, 'gameoff');
 		this.gameoff.setOrigin(0, 0);
 
-		this.endGameText = this.add.bitmapText(480, 270, 'scoreFont','GAME OVER', 60);
+		this.endGameText = this.add.image(480, 270, 'gameover');
 		this.endGameText.setOrigin(0.5, 0.5);
 		this.endGameText.setDepth(1);
 		this.endGameText.setAlpha(0);
@@ -148,7 +148,7 @@ class PolyShooter extends Phaser.Scene {
 		}   
 		else {
 			
-			
+			this.checkReset();
 		}
 	}
 }

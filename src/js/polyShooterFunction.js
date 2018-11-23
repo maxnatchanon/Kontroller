@@ -154,11 +154,56 @@ PolyShooter.prototype.reduceLifePoint = function() {
         life.destroy(true, false);
     });
     if (this.currentLifePoint == 0) {
+        this.player.setVelocityX(0);
         this.isPlaying = false;
         this.player.anims.play('playerDead');
         this.player.on('animationcomplete', function() {
-            this.player.destroy(true, false);
-        }, this);
+            this.destroy();
+        });
         this.endGameText.setAlpha(1);
+    }
+}
+
+// Restart the game
+PolyShooter.prototype.resetGame = function() {
+    // this.enemies.children.iterate(function (enemy) {
+    //     enemy.destroy();
+    // });
+    this.enemies.clear(true, true);
+    this.bullets.clear(true, true)
+
+    this.currentLifePoint = 3;
+    this.lifes = [];
+    this.lifes.push(this.physics.add.sprite(48, 270, 'life'));
+    this.lifes.push(this.physics.add.sprite(113, 270, 'life'));
+    this.lifes.push(this.physics.add.sprite(178, 270, 'life'));
+
+    this.currentScore = 0;
+    this.scoreText.setText(this.currentScore);
+
+    this.currentLevel = 0;
+    this.enemyTick = 0;
+	this.enemyInterval = this.enemyIntervalLevel[this.currentLevel];
+	this.enemySpeed = this.enemySpeedLevel[this.currentLevel];
+    this.enemySpeedRange = 40;
+    
+    this.player = this.physics.add.sprite(480, 480, 'player');
+    this.player.setOrigin(0.5, 0.5);
+    this.physics.add.collider(this.player, this.wall);
+
+    this.bullets = this.physics.add.group();
+    this.enemies = this.physics.add.group();
+    this.physics.add.collider(this.enemies, this.bullets, this.bulletHitEnemy, null, this);
+    
+    this.endGameText.setAlpha(0);
+    this.isPlaying = true;	
+}
+
+// Check if player press fire to restart the game
+PolyShooter.prototype.checkReset = function() {
+    for (let index = 0; index < this.fire.length; index++) {
+        if (this.fire[index].isDown && this.fireTick > this.fireInterval) {
+            this.resetGame();
+        }
     }
 }
