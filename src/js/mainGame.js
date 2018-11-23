@@ -1,11 +1,11 @@
-class PolyShooter extends Phaser.Scene {
+class MainGame extends Phaser.Scene {
 
 	constructor() {
-		super({key:"polyShooter"});
+		super({key:"mainGame"});
 	}
 
 	preload() {
-		this.load.baseURL = 'assets/polyShooter/';
+		this.load.baseURL = 'assets/img/';
 		this.load.image('player', 'player.png');
 		this.load.image('playerLeft', 'playerLeft.png');
 		this.load.image('playerRight', 'playerRight.png');

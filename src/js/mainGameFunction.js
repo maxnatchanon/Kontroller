@@ -1,5 +1,5 @@
 // Check if player pressed move button
-PolyShooter.prototype.checkPlayerMove = function() {
+MainGame.prototype.checkPlayerMove = function() {
     if (this.left.isDown) {
         this.player.setVelocityX(-250);
         this.player.setTexture('playerLeft');
@@ -18,7 +18,7 @@ PolyShooter.prototype.checkPlayerMove = function() {
 }
 
 // Check if player pressed fire button
-PolyShooter.prototype.checkFire = function() {
+MainGame.prototype.checkFire = function() {
     for (let index = 0; index < this.fire.length; index++) {
         if (this.fire[index].isDown && this.fireTick > this.fireInterval) {
             var bullet = this.physics.add.sprite(this.player.x, this.player.y + 10, 'bullet');
@@ -32,7 +32,7 @@ PolyShooter.prototype.checkFire = function() {
 }
 
 // Clear bullets that are out of screen
-PolyShooter.prototype.clearBullet = function() {
+MainGame.prototype.clearBullet = function() {
     var outBullets = [];
     this.bullets.children.iterate(function (bullet) {
         if (bullet.y < -100) {
@@ -45,7 +45,7 @@ PolyShooter.prototype.clearBullet = function() {
 }
 
 // Generate new enemy if tick reach current interval
-PolyShooter.prototype.generateEnemy = function() {
+MainGame.prototype.generateEnemy = function() {
     if (this.enemyTick > this.enemyInterval) {
         var enemy = this.physics.add.sprite(Math.floor(Math.random() * 437) + 262, -Math.floor(Math.random() * 150), 'enemy');
         this.enemies.add(enemy);
@@ -56,7 +56,7 @@ PolyShooter.prototype.generateEnemy = function() {
 }
 
 // Check if enemy reach reached the bottom of screen
-PolyShooter.prototype.checkEnemyReachBottom = function() {
+MainGame.prototype.checkEnemyReachBottom = function() {
     var reachedEnemies = [];
     this.enemies.children.iterate(function (enemy) {
         if (enemy.y > 540 + 40) { 
@@ -70,7 +70,7 @@ PolyShooter.prototype.checkEnemyReachBottom = function() {
 }
 
 // Bullet and enemy collide callback function
-PolyShooter.prototype.bulletHitEnemy = function(enemy, bullet) {
+MainGame.prototype.bulletHitEnemy = function(enemy, bullet) {
     if (bullet.x < enemy.x) {
         bullet.setVelocityY(0);
         bullet.setOrigin(0.5,0.95)
@@ -102,7 +102,7 @@ PolyShooter.prototype.bulletHitEnemy = function(enemy, bullet) {
 }         
 
 // Check enemy and player collision
-PolyShooter.prototype.checkEnemyCollidePlayer = function() {
+MainGame.prototype.checkEnemyCollidePlayer = function() {
     // Player and enemy body are both 40x40 pixel
     let playerTop = this.player.y - 20;
     let playerX = this.player.x;
@@ -125,7 +125,7 @@ PolyShooter.prototype.checkEnemyCollidePlayer = function() {
     }
 }
 
-PolyShooter.prototype.killEnemy = function(enemy, onRight) {
+MainGame.prototype.killEnemy = function(enemy, onRight) {
     if (onRight) {
         enemy.setVelocityY(0);
         enemy.anims.play('enemyHit');
@@ -146,7 +146,7 @@ PolyShooter.prototype.killEnemy = function(enemy, onRight) {
 }
 
 // Reduce life point and end game if life point is 0
-PolyShooter.prototype.reduceLifePoint = function() {
+MainGame.prototype.reduceLifePoint = function() {
     this.currentLifePoint--;
     var life = this.lifes[this.currentLifePoint];
     life.anims.play('lifeBreak');
@@ -165,7 +165,7 @@ PolyShooter.prototype.reduceLifePoint = function() {
 }
 
 // Restart the game
-PolyShooter.prototype.resetGame = function() {
+MainGame.prototype.resetGame = function() {
     // this.enemies.children.iterate(function (enemy) {
     //     enemy.destroy();
     // });
@@ -200,7 +200,7 @@ PolyShooter.prototype.resetGame = function() {
 }
 
 // Check if player press fire to restart the game
-PolyShooter.prototype.checkReset = function() {
+MainGame.prototype.checkReset = function() {
     for (let index = 0; index < this.fire.length; index++) {
         if (this.fire[index].isDown && this.fireTick > this.fireInterval) {
             this.resetGame();
