@@ -154,6 +154,11 @@ PolyShooter.prototype.reduceLifePoint = function() {
         life.destroy(true, false);
     });
     if (this.currentLifePoint == 0) {
-        // TODO: End game
+        this.isPlaying = false;
+        this.player.anims.play('playerDead');
+        this.player.on('animationcomplete', function() {
+            this.player.destroy(true, false);
+        }, this);
+        this.endGameText.setAlpha(1);
     }
 }

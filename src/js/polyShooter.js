@@ -9,6 +9,7 @@ class PolyShooter extends Phaser.Scene {
 		this.load.image('player', 'player.png');
 		this.load.image('playerLeft', 'playerLeft.png');
 		this.load.image('playerRight', 'playerRight.png');
+		this.load.spritesheet('playerDead', 'animPlayerDead.png', { frameWidth: 120, frameHeight: 120 });
 
 		this.load.image('border', 'border.png');
 		this.load.image('wall', 'wall.png');
@@ -26,6 +27,9 @@ class PolyShooter extends Phaser.Scene {
 		this.load.bitmapFont('gameFont', '../font/gameFont.png', '../font/gameFont.fnt')
 
 		this.load.spritesheet('life', 'animLifeBreak.png', { frameWidth: 60, frameHeight: 120 });
+
+		this.load.image('title', 'title.png');
+		this.load.image('gameoff', 'gameoff.png');
 	}
 
 	create() {
@@ -43,6 +47,12 @@ class PolyShooter extends Phaser.Scene {
 		this.player = this.physics.add.sprite(480, 480, 'player');
 		this.player.setOrigin(0.5, 0.5);
 		this.physics.add.collider(this.player, this.wall);
+		this.anims.create({
+			key: 'playerDead',
+			frames: this.anims.generateFrameNumbers('playerDead', { start: 0, end: 6 }),
+			frameRate: 60,
+			repeat: 0
+		});
 
 		// Bullet
 		this.bullets = this.physics.add.group();
@@ -84,8 +94,17 @@ class PolyShooter extends Phaser.Scene {
 		this.scoreText = this.add.bitmapText(846, 70, 'scoreFont','0', 75);
 		this.scoreText.setOrigin(0.5,0.5);
 		this.currentScore = 0;
-		this.title = this.add.bitmapText(12, 28, 'titleFont','Kontroller', 18);
-		this.gameTitle = this.add.bitmapText(9, 48, 'gameFont','PolyShooter', 35);
+
+		this.title = this.add.image(12, 28, 'title');
+		this.title.setOrigin(0, 0);
+
+		this.gameoff = this.add.image(12, 500, 'gameoff');
+		this.gameoff.setOrigin(0, 0);
+
+		this.endGameText = this.add.bitmapText(480, 270, 'scoreFont','GAME OVER', 60);
+		this.endGameText.setOrigin(0.5, 0.5);
+		this.endGameText.setDepth(1);
+		this.endGameText.setAlpha(0);
 
 		// Life
 		this.lifes = [];
@@ -108,20 +127,28 @@ class PolyShooter extends Phaser.Scene {
 		this.switchSkillLeft = this.input.keyboard.addKey(192);
 		this.switchSkillRight = [this.input.keyboard.addKey(109),
 								this.input.keyboard.addKey(8)];
+		
+		// Game status
+		this.isPlaying = true;								
 	}
 
 	update() {
 		// Move background star
 		this.star.tilePositionY -= 0.75;
+		if (this.isPlaying) {
+			this.checkPlayerMove();
+			this.checkFire();
+			this.clearBullet();
+			this.generateEnemy();
+			this.checkEnemyReachBottom();
+			this.checkEnemyCollidePlayer();
 
-		this.checkPlayerMove();
-		this.checkFire();
-		this.clearBullet();
-		this.generateEnemy();
-		this.checkEnemyReachBottom();
-		this.checkEnemyCollidePlayer();
-
-		this.fireTick++;
-		this.enemyTick++;
+			this.fireTick++;
+			this.enemyTick++;
+		}   
+		else {
+			
+			
+		}
 	}
 }
