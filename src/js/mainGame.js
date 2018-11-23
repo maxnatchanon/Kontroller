@@ -29,6 +29,13 @@ class MainGame extends Phaser.Scene {
 		this.load.image('title', 'title.png');
 		this.load.image('gameoff', 'gameoff.png');
 		this.load.image('gameover', 'gameover.png');
+
+		this.load.image('redSkill', 'redSkill.png');
+		this.load.image('blueSkill', 'blueSkill.png');
+		this.load.image('yellowSkill', 'yellowSkill.png');
+		this.load.image('redSkillCooldown', 'redSkillCooldown.png');
+		this.load.image('blueSkillCooldown', 'blueSkillCooldown.png');
+		this.load.image('yellowSkillCooldown', 'yellowSkillCooldown.png');
 	}
 
 	create() {
