@@ -131,6 +131,7 @@ MainGame.prototype.killEnemy = function(enemy, onRight) {
         enemy.setVelocityY(0);
         enemy.anims.play('enemyHit');
         enemy.setScale(-1,1);
+        this.enemies.remove(enemy, false, false);
         enemy.on("animationcomplete", function() {
             enemy.destroy(true, false);
         }, this);
@@ -138,6 +139,7 @@ MainGame.prototype.killEnemy = function(enemy, onRight) {
     else {
         enemy.setVelocityY(0);
         enemy.anims.play('enemyHit');
+        this.enemies.remove(enemy, false, false);
         enemy.on('animationcomplete', function() {
             enemy.destroy(true, false);
         }, this);
