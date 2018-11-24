@@ -105,10 +105,10 @@ class MainGame extends Phaser.Scene {
 		this.scoreText.setOrigin(0.5,0.5);
 		this.currentScore = 0;
 
-		this.title = this.add.image(12, 28, 'title');
+		this.title = this.add.image(18, 28, 'title');
 		this.title.setOrigin(0, 0);
 
-		this.gameoff = this.add.image(12, 500, 'gameoff');
+		this.gameoff = this.add.image(18, 508, 'gameoff');
 		this.gameoff.setOrigin(0, 0);
 
 		this.endGameText = this.add.image(480, 270, 'gameover');

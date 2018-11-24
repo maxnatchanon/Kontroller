@@ -195,6 +195,15 @@ MainGame.prototype.resetGame = function() {
     
     this.endGameText.setAlpha(0);
     this.isPlaying = true;	
+
+    this.currentSkill = 0;
+    this.skillCoolDownTime[0] = 2000;
+    this.skillCoolDownTime[1] = 2500;
+    this.skillCoolDownTime[2] = 6000;
+    this.skillActiveTime[0] = 0;
+    this.skillActiveTime[1] = 0;
+    this.skillActiveTime[2] = 0;
+    this.selectSkill.y = this.skillPos[this.currentSkill];
 }
 
 // Check if player press fire to restart the game
