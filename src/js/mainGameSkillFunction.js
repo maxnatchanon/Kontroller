@@ -125,5 +125,4 @@ MainGame.prototype.checkShieldHitEnemy = function(shield, enemy) {
     for (let index = 0; index < killList.length; index++) {
         this.killEnemy(killList[index][0], killList[index][1]);
     }
-    this.skillCoolDownTime[0] = this.skillMaxCooldownTime[0];
 }
