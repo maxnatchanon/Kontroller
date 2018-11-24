@@ -39,6 +39,9 @@ class MainGame extends Phaser.Scene {
 		this.load.image('skillMask', 'skillMask.png');
 		this.load.image('selectSkill', 'selectSkill.png');
 		this.load.image('blueShield', 'blueShield.png');
+
+		this.load.audio('gameLoop', ['../sound/gameLoop.mp3']);
+		this.load.audio('endLoop', ['../sound/endLoop.mp3']);
 	}
 
 	create() {
@@ -173,7 +176,18 @@ class MainGame extends Phaser.Scene {
 		this.skillPressBtnDown = null;
 		
 		// Game status
-		this.isPlaying = true;								
+		this.isPlaying = true;	
+		
+		this.gameBgm = this.sound.add('gameLoop', {
+			volume: 1,
+			loop: true,
+		});
+		this.endBgm = this.sound.add('endLoop', {
+			volume: 1,
+			loop: true,
+		});
+
+		this.gameBgm.play();
 	}
 
 	update() {

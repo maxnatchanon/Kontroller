@@ -162,6 +162,8 @@ MainGame.prototype.reduceLifePoint = function() {
             this.destroy();
         });
         this.endGameText.setAlpha(1);
+        this.gameBgm.stop();
+        this.endBgm.play();
     }
 }
 
@@ -204,6 +206,9 @@ MainGame.prototype.resetGame = function() {
     this.skillActiveTime[1] = 0;
     this.skillActiveTime[2] = 0;
     this.selectSkill.y = this.skillPos[this.currentSkill];
+
+    this.endBgm.stop();
+    this.gameBgm.play();
 }
 
 // Check if player press fire to restart the game
