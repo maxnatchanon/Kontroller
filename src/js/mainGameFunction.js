@@ -125,6 +125,7 @@ MainGame.prototype.checkEnemyCollidePlayer = function() {
     }
 }
 
+// Kill enemy
 MainGame.prototype.killEnemy = function(enemy, onRight) {
     if (onRight) {
         enemy.setVelocityY(0);
@@ -166,9 +167,6 @@ MainGame.prototype.reduceLifePoint = function() {
 
 // Restart the game
 MainGame.prototype.resetGame = function() {
-    // this.enemies.children.iterate(function (enemy) {
-    //     enemy.destroy();
-    // });
     this.enemies.clear(true, true);
     this.bullets.clear(true, true)
 

@@ -29,13 +29,23 @@ class MainGame extends Phaser.Scene {
 		this.load.image('title', 'title.png');
 		this.load.image('gameoff', 'gameoff.png');
 		this.load.image('gameover', 'gameover.png');
+
+		this.load.image('redSkill', 'redSkill.png');
+		this.load.image('blueSkill', 'blueSkill.png');
+		this.load.image('yellowSkill', 'yellowSkill.png');
+		this.load.image('redSkillCooldown', 'redSkillCooldown.png');
+		this.load.image('blueSkillCooldown', 'blueSkillCooldown.png');
+		this.load.image('yellowSkillCooldown', 'yellowSkillCooldown.png');
+		this.load.image('skillMask', 'skillMask.png');
+		this.load.image('selectSkill', 'selectSkill.png');
+		this.load.image('blueShield', 'blueShield.png');
 	}
 
 	create() {
 
 		// Background
-		this.add.image(480, 270, 'bg');
-		this.star = this.add.tileSprite(480, 270, 960, 1000, 'star');
+		this.add.image(480, 270, 'bg').setDepth(-10);
+		this.star = this.add.tileSprite(480, 270, 960, 1000, 'star').setDepth(-9);
 		this.sideGlow = this.physics.add.staticGroup();
 		this.sideGlow.create(293, 0, 'border').setOrigin(0,0).setScale(-1, 1).refreshBody();
 		this.sideGlow.create(667, 0, 'border').setOrigin(0,0).refreshBody();
@@ -118,15 +128,49 @@ class MainGame extends Phaser.Scene {
 			frameRate: 40,
 			repeat: 0
 		});
+		
+		// Skill
+		this.currentSkill = 0;
+		this.skillPos = [195, 317, 439];
+		this.skillCoolDownTime = [2000, 2500, 6000];
+		this.skillMaxCooldownTime = [2000, 2500, 6000];
+		this.skillActiveTime = [0, 0, 0];
+		this.skillMaxActiveTime = [0, 600, 2000];
+
+		this.add.image(845, 195, 'redSkillCooldown');
+		this.add.image(845, 317, 'yellowSkillCooldown');
+		this.add.image(845, 439, 'blueSkillCooldown');
+		this.redSkill = this.add.image(845, 195, 'redSkill').setDepth(1);
+		this.yellowSkill = this.add.image(845, 317, 'yellowSkill').setDepth(1);
+		this.blueSkill = this.add.image(845, 439, 'blueSkill').setDepth(1);
+
+		this.skillMask = [];
+		this.skillMask.push(this.add.image(845, 195+43, 'skillMask').setVisible(false).setOrigin(0.5, 1).setScale(1, 0));
+		this.redSkill.setMask(this.skillMask[0].createBitmapMask());
+
+		this.skillMask.push(this.add.image(845, 317+43, 'skillMask').setVisible(false).setOrigin(0.5, 1).setScale(1, 0));
+		this.yellowSkill.setMask(this.skillMask[1].createBitmapMask());
+
+		this.skillMask.push(this.add.image(845, 439+43, 'skillMask').setVisible(false).setOrigin(0.5, 1).setScale(1, 0));
+		this.blueSkill.setMask(this.skillMask[2].createBitmapMask());
+
+		this.selectSkill = this.add.image(845, 195, 'selectSkill').setDepth(-1);
+
+		this.blueShield = this.add.image(230, 380, 'blueShield').setOrigin(0, 0).setDepth(1).setAlpha(1);
 
 		// Input
 		this.left = this.input.keyboard.addKey(16);
 		this.right = this.input.keyboard.addKey(90)
 		this.fire = [this.input.keyboard.addKey(53),
 					this.input.keyboard.addKey(222)];
-		this.switchSkillLeft = this.input.keyboard.addKey(192);
-		this.switchSkillRight = [this.input.keyboard.addKey(109),
+		this.switchSkillUp = this.input.keyboard.addKey(192);
+		this.switchSkillDown = [this.input.keyboard.addKey(109),
 								this.input.keyboard.addKey(8)];
+		this.skillPress = [this.input.keyboard.addKey(57),
+							this.input.keyboard.addKey(221),
+							this.input.keyboard.addKey(65)];
+		this.skillSwitchBtnDown = null;
+		this.skillPressBtnDown = null;
 		
 		// Game status
 		this.isPlaying = true;								
@@ -137,17 +181,21 @@ class MainGame extends Phaser.Scene {
 		this.star.tilePositionY -= 0.75;
 		if (this.isPlaying) {
 			this.checkPlayerMove();
-			this.checkFire();
+			this.checkFire();	
 			this.clearBullet();
 			this.generateEnemy();
 			this.checkEnemyReachBottom();
 			this.checkEnemyCollidePlayer();
 
+			this.checkSkillSwitch();
+			this.cooldownSkill();
+			this.checkSkillPress();
+			this.checkSkillActivateTime();
+
 			this.fireTick++;
 			this.enemyTick++;
 		}   
 		else {
-			
 			this.checkReset();
 		}
 	}
