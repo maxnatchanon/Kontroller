@@ -5,7 +5,7 @@ class MainGame extends Phaser.Scene {
 	}
 
 	preload() {
-		this.load.baseURL = 'assets/img/';
+		this.load.baseURL = 'assets/mainGame/img/';
 		this.load.image('player', 'player.png');
 		this.load.image('playerLeft', 'playerLeft.png');
 		this.load.image('playerRight', 'playerRight.png');
