@@ -42,6 +42,17 @@ class MainGame extends Phaser.Scene {
 
 		this.load.audio('gameLoop', ['../sound/gameLoop.mp3']);
 		this.load.audio('endLoop', ['../sound/endLoop.mp3']);
+		this.load.audio('fireSound', ['../sound/fireSound.mp3']);
+		this.load.audio('enemyDeadSound', ['../sound/enemyDeadSound.mp3']);
+		this.load.audio('skillSwitch', ['../sound/skillSwitch.mp3']);
+		this.load.audio('lifeBreakSound', ['../sound/lifeBreakSound.mp3']);
+		this.load.audio('gameOverSound', ['../sound/gameOverSound.mp3']);
+		this.load.audio('startGameSound', ['../sound/startGameSound.mp3']);
+		this.load.audio('skillReadySound', ['../sound/skillReadySound.mp3']);
+		this.load.audio('redSkillActivate', ['../sound/redSkillActivate.mp3']);
+		this.load.audio('yellowSkillToggle', ['../sound/yellowSkillToggle.mp3']);
+		this.load.audio('blueShieldSound', ['../sound/blueShieldSound.mp3']);
+		this.load.audio('blueSkillActivate', ['../sound/blueSkillActivate.wav']);
 	}
 
 	create() {
@@ -96,8 +107,8 @@ class MainGame extends Phaser.Scene {
 
 		// Difficulty
 		this.currentLevel = 0;
-		this.enemyIntervalLevel = [150, 115, 90, 70, 55, 45, 35, 30];
-		this.enemySpeedLevel = [70, 80, 90, 95, 100, 105, 110, 120];
+		this.enemyIntervalLevel = [150, 115, 90, 70, 55, 45, 40, 35, 30];
+		this.enemySpeedLevel = [70, 80, 90, 95, 100, 105, 110, 115, 110];
 		this.enemyTick = 0;
 		this.enemyInterval = this.enemyIntervalLevel[this.currentLevel];
 		this.enemySpeed = this.enemySpeedLevel[this.currentLevel];
@@ -159,18 +170,18 @@ class MainGame extends Phaser.Scene {
 
 		this.selectSkill = this.add.image(845, 195, 'selectSkill').setDepth(-1);
 
-		this.blueShield = this.add.image(230, 380, 'blueShield').setOrigin(0, 0).setDepth(1).setAlpha(1);
+		this.blueShield = this.add.image(230, 380, 'blueShield').setOrigin(0, 0).setDepth(1).setAlpha(0);
 
 		// Input
 		this.left = this.input.keyboard.addKey(16);
 		this.right = this.input.keyboard.addKey(90)
-		this.fire = [this.input.keyboard.addKey(53),
-					this.input.keyboard.addKey(222)];
+		this.fire = [this.input.keyboard.addKey(50),
+					this.input.keyboard.addKey(191)];
 		this.switchSkillUp = this.input.keyboard.addKey(192);
 		this.switchSkillDown = [this.input.keyboard.addKey(109),
 								this.input.keyboard.addKey(8)];
-		this.skillPress = [this.input.keyboard.addKey(57),
-							this.input.keyboard.addKey(221),
+		this.skillPress = [this.input.keyboard.addKey(54),
+							this.input.keyboard.addKey(222),
 							this.input.keyboard.addKey(65)];
 		this.skillSwitchBtnDown = null;
 		this.skillPressBtnDown = null;
@@ -179,15 +190,20 @@ class MainGame extends Phaser.Scene {
 		this.isPlaying = true;	
 		
 		this.gameBgm = this.sound.add('gameLoop', {
-			volume: 1,
-			loop: true,
+			volume: 0.3,
+			loop: true
 		});
 		this.endBgm = this.sound.add('endLoop', {
-			volume: 1,
-			loop: true,
+			volume: 0.65,
+			loop: true
 		});
+		this.blueShieldSound = this.sound.add('blueShieldSound', {
+			volume: 0.7,
+			loop: true
+		})
 
 		this.gameBgm.play();
+		this.sound.play('startGameSound', { volume: 0.45 });
 	}
 
 	update() {
