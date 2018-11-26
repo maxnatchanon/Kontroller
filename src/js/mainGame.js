@@ -13,8 +13,6 @@ class MainGame extends Phaser.Scene {
 
 		this.load.image('border', 'border.png');
 		this.load.image('wall', 'wall.png');
-		this.load.image('bg', 'bg.png');
-		this.load.image('star', 'star.png');
 
 		this.load.spritesheet('bullet', 'bullet.png', { frameWidth: 10, frameHeight: 110 });
 		this.load.spritesheet('bulletHit', 'animBulletHit.png', { frameWidth: 100, frameHeight: 59 });
@@ -149,7 +147,7 @@ class MainGame extends Phaser.Scene {
 		this.skillCoolDownTime = [2000, 2500, 6000];
 		this.skillMaxCooldownTime = [2000, 2500, 6000];
 		this.skillActiveTime = [0, 0, 0];
-		this.skillMaxActiveTime = [0, 600, 2000];
+		this.skillMaxActiveTime = [0, 600, 1750];
 
 		this.add.image(845, 195, 'redSkillCooldown');
 		this.add.image(845, 317, 'yellowSkillCooldown');
@@ -189,18 +187,9 @@ class MainGame extends Phaser.Scene {
 		// Game status
 		this.isPlaying = true;	
 		
-		this.gameBgm = this.sound.add('gameLoop', {
-			volume: 0.3,
-			loop: true
-		});
-		this.endBgm = this.sound.add('endLoop', {
-			volume: 0.65,
-			loop: true
-		});
-		this.blueShieldSound = this.sound.add('blueShieldSound', {
-			volume: 0.7,
-			loop: true
-		})
+		this.gameBgm = this.sound.add('gameLoop', { volume: 0.3, loop: true });
+		this.endBgm = this.sound.add('endLoop', { volume: 0.65, loop: true });
+		this.blueShieldSound = this.sound.add('blueShieldSound', { volume: 0.7, loop: true })
 
 		this.gameBgm.play();
 		this.sound.play('startGameSound', { volume: 0.45 });
