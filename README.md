@@ -1,5 +1,5 @@
 # Kontroller
-![](https://i.imgur.com/AlHuAm2.png)
+![](https://i.imgur.com/prM2c50.png)
 **GitHub Game Off 2018 - Hybrid**  
 
 Want a controller gaming experience without any controller?  
