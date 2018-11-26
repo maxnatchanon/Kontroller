@@ -23,6 +23,7 @@ MainGame.prototype.checkSkillSwitch = function() {
 
 // Switch skill
 MainGame.prototype.switchSkill = function(up) {
+    this.sound.play('skillSwitch', { volume: 0.6, seek: 0.05 });
     if (up) {
         this.currentSkill--;
         if (this.currentSkill === -1) this.currentSkill = 2;
@@ -39,6 +40,7 @@ MainGame.prototype.cooldownSkill = function() {
         if (this.skillCoolDownTime[index] > 0) {
             this.skillCoolDownTime[index]--;
             this.skillMask[index].setScale(1, 1-(this.skillCoolDownTime[index]/this.skillMaxCooldownTime[index]));
+            if (this.skillCoolDownTime[index] === 0) this.sound.play('skillReadySound', { volume: 0.3, seek: 0.85 });
         }
     }
 }
@@ -72,6 +74,7 @@ MainGame.prototype.useSkill = function() {
 
 // Activate skill
 MainGame.prototype.activateRedSkill = function() {
+    this.sound.play('redSkillActivate', { volume: 0.9 } );
     var killList = [];
     this.enemies.children.iterate(function (enemy) {
         var onRight = Math.floor(Math.random() * 2);
@@ -83,34 +86,43 @@ MainGame.prototype.activateRedSkill = function() {
     this.skillCoolDownTime[0] = this.skillMaxCooldownTime[0];
 }
 MainGame.prototype.activateYellowSkill = function() {
+    this.sound.play('yellowSkillToggle', { volume: 5, seek: 0.25, detune: 1000, rate: 0.75 });
     this.fireInterval = 5;
     this.skillActiveTime[1] = this.skillMaxActiveTime[1];
     this.skillCoolDownTime[1] = this.skillMaxCooldownTime[1];
 }
 MainGame.prototype.activateBlueSkill = function() {
+    this.sound.play('blueSkillActivate', { volume: 0.9 })
+    this.blueShieldSound.setRate(1).play();
     this.skillActiveTime[2] = this.skillMaxActiveTime[2];
     this.skillCoolDownTime[2] = this.skillMaxCooldownTime[2];
 }
 
-// Deactivate skill if active time ran out
+// Deactivate skill if activate time ran out
 MainGame.prototype.checkSkillActivateTime = function() {
-    this.skillActiveTime[1] -= (this.skillActiveTime[1] > 0) ? 1 : 0;
-    this.skillActiveTime[2] -= (this.skillActiveTime[2] > 0) ? 1 : 0;
-
-    if (this.skillActiveTime[1] === 0) {
-        this.fireInterval = 20;
+    if (this.skillActiveTime[1] > 0) {
+        this.skillActiveTime[1] -=  1;
+        if (this.skillActiveTime[1] === 0) {
+            this.sound.play('yellowSkillToggle', { volume: 5, seek: 0.25, detune: 1000, rate: 0.75 });
+            this.fireInterval = 20;
+        }
     }
-
-    if (this.skillActiveTime[2] === 0) {
-        this.blueShield.setAlpha(0);
-    }
-    else {
-        var opacityVal = (this.skillActiveTime[2] % 100)
-        opacityVal -= (opacityVal > 50) ? (opacityVal - 50) * 2 : 0;
-        opacityVal /= 50;
-        if (this.skillActiveTime[2] <= 1950 && this.skillActiveTime[2] > 50) opacityVal = opacityVal * (1 - 0.35) / 1 + 0.35;
-        this.blueShield.setAlpha(opacityVal);
-        this.checkShieldHitEnemy();
+    
+    if (this.skillActiveTime[2] > 0) {
+        this.skillActiveTime[2] -= 1;
+        if (this.skillActiveTime[2] === 0) {
+            this.blueShieldSound.stop();
+            this.blueShield.setAlpha(0);
+        }
+        else {
+            var opacityVal = (this.skillActiveTime[2] % 100)
+            opacityVal -= (opacityVal > 50) ? (opacityVal - 50) * 2 : 0;
+            opacityVal /= 50;
+            if (this.skillActiveTime[2] <= 1950 && this.skillActiveTime[2] > 50) opacityVal = opacityVal * (1 - 0.35) / 1 + 0.35;
+            this.blueShield.setAlpha(opacityVal);
+            if (this.skillActiveTime[2] < 300) this.blueShieldSound.setRate(1.5);
+            this.checkShieldHitEnemy();
+        }
     }
 }
 

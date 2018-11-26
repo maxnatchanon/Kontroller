@@ -27,6 +27,7 @@ MainGame.prototype.checkFire = function() {
             bullet.setVelocityY(-1200);
             bullet.setMass(0);
             this.fireTick = 0;
+            this.sound.play('fireSound', { volume: 0.85, seek: 0.05 });
         }
     }
 }
@@ -83,7 +84,7 @@ MainGame.prototype.bulletHitEnemy = function(enemy, bullet) {
     }
     else {
         bullet.setVelocityY(0);
-        bullet.setOrigin(0.5,0.95)
+        bullet.setOrigin(0.5,0.95);
         bullet.anims.play('bulletHit');
         bullet.setScale(-1,1);
         this.bullets.remove(bullet, false, false);
@@ -91,13 +92,6 @@ MainGame.prototype.bulletHitEnemy = function(enemy, bullet) {
             bullet.destroy(true, false);
         }, this);
         this.killEnemy(enemy, false);
-    }
-    this.currentScore++;
-    this.scoreText.setText(this.currentScore);
-    if (this.currentScore % 10 == 0) {
-        this.currentLevel += (this.currentLevel < 7) ? 1 : 0;
-        this.enemyInterval = this.enemyIntervalLevel[this.currentLevel];
-		this.enemySpeed = this.enemySpeedLevel[this.currentLevel];
     }
 }         
 
@@ -127,6 +121,8 @@ MainGame.prototype.checkEnemyCollidePlayer = function() {
 
 // Kill enemy
 MainGame.prototype.killEnemy = function(enemy, onRight) {
+    this.sound.play('enemyDeadSound', { volume: 0.25, seek: 0.05 });
+    this.addScore();
     if (onRight) {
         enemy.setVelocityY(0);
         enemy.anims.play('enemyHit');
@@ -146,6 +142,23 @@ MainGame.prototype.killEnemy = function(enemy, onRight) {
     }
 }
 
+// Add current score by 1
+MainGame.prototype.addScore = function() {
+    this.currentScore++;
+    this.scoreText.setText(this.currentScore);
+    if (this.currentScore <= 100 && this.currentScore % 10 == 0) {
+        this.currentLevel += (this.currentLevel < 8) ? 1 : 0;
+        if (this.currentLevel < 8) {
+            this.enemyInterval = this.enemyIntervalLevel[this.currentLevel];
+            this.enemySpeed = this.enemySpeedLevel[this.currentLevel];
+        }
+        else if (this.currentScore === 100) {
+            this.enemyInterval = this.enemyIntervalLevel[this.currentLevel];
+            this.enemySpeed = this.enemySpeedLevel[this.currentLevel];
+        }
+    }
+}
+
 // Reduce life point and end game if life point is 0
 MainGame.prototype.reduceLifePoint = function() {
     this.currentLifePoint--;
@@ -155,6 +168,7 @@ MainGame.prototype.reduceLifePoint = function() {
         life.destroy(true, false);
     });
     if (this.currentLifePoint == 0) {
+        this.sound.play('gameOverSound', { volume: 0.7, seek: 0.05 });
         this.player.setVelocityX(0);
         this.isPlaying = false;
         this.player.anims.play('playerDead');
@@ -162,11 +176,18 @@ MainGame.prototype.reduceLifePoint = function() {
             this.destroy();
         });
         this.endGameText.setAlpha(1);
+        this.gameBgm.stop();
+        this.endBgm.play();
+    }
+    else {
+        this.sound.play('lifeBreakSound', { volume: 0.6 });
     }
 }
 
 // Restart the game
 MainGame.prototype.resetGame = function() {
+    this.sound.play('startGameSound', { volume: 0.45 });
+
     this.enemies.clear(true, true);
     this.bullets.clear(true, true)
 
@@ -204,6 +225,9 @@ MainGame.prototype.resetGame = function() {
     this.skillActiveTime[1] = 0;
     this.skillActiveTime[2] = 0;
     this.selectSkill.y = this.skillPos[this.currentSkill];
+
+    this.endBgm.stop();
+    this.gameBgm.play();
 }
 
 // Check if player press fire to restart the game
