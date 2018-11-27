@@ -105,12 +105,12 @@ class MainGame extends Phaser.Scene {
 
 		// Difficulty
 		this.currentLevel = 0;
-		this.enemyIntervalLevel = [150, 115, 90, 70, 55, 45, 40, 35, 30];
-		this.enemySpeedLevel = [70, 80, 90, 95, 100, 105, 110, 115, 110];
+		this.enemyIntervalLevel = [150, 115, 90, 70, 55, 45, 40, 35, 32];
+		this.enemySpeedLevel = [70, 80, 90, 95, 100, 105, 112, 112, 110];
 		this.enemyTick = 0;
 		this.enemyInterval = this.enemyIntervalLevel[this.currentLevel];
 		this.enemySpeed = this.enemySpeedLevel[this.currentLevel];
-		this.enemySpeedRange = 40;
+		this.enemySpeedRange = 35;
 		
 		// Text
 		this.scoreText = this.add.bitmapText(846, 70, 'scoreFont','0', 75);
