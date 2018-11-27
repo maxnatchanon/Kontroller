@@ -12,17 +12,17 @@ This game will transform your traditional keyboard into a controller!! *[very_lo
 3. Enjoy!
 
 or
-```
-working for an easier way
-```
+
+1. Just go to [https://maxnatchanon.itch.io/kontroller](https://maxnatchanon.itch.io/kontroller).
+2. That's it. Enjoy!
 
 ## How to play
 First, you have to [hold your keyboard in a controller style](https://i.imgur.com/nLhWsmc.png).  
 This game support both with- and without- numpad keyboard.  
 *Hey, but what if I want to play this on notebook?*  
-No worry! just [hold your notebook in a controller style](https://i.imgur.com/UgdrKvz.png)!!  
+No worry! Just [hold your notebook in a controller style](https://i.imgur.com/UgdrKvz.png)!!  
 
-You also can play this in normal keyboard position, ...but what's the point then?
+You also can play this in normal keyboard position, but trust me, this way more funier!
 
 Once you enter the game, you will control a spaceship. (yes, that cute little triangle)  
 Your job is to shoot those green aliens and do not let them reach the bottom of the screen. Simple, right?  
