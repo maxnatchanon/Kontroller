@@ -58,6 +58,7 @@ class StartScreen extends Phaser.Scene {
 
     // ===============================================================================
 
+    // Blink the input sprite - 45 tick on / 30 tick off
     blink(text) {
         if ((text.alpha === 1)) {
             if (this.tick === 45) {
@@ -73,6 +74,7 @@ class StartScreen extends Phaser.Scene {
         }
     }
 
+    // Transition into state 2 
     transition() {
         if (this.tick <= 50) {
             this.logo.alpha -= 0.02;
@@ -89,6 +91,7 @@ class StartScreen extends Phaser.Scene {
         }
     }
 
+    // Fade everything out and switch to main game scene
     startGame() {
         if (this.tick <= 50) {
             this.tutorial.alpha -= 0.02;
