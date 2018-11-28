@@ -1,6 +1,7 @@
 # Kontroller
 ![](https://i.imgur.com/prM2c50.png)
 **GitHub Game Off 2018 - Hybrid**  
+Project Page : [https://maxnatchanon.itch.io/kontroller](https://maxnatchanon.itch.io/kontroller)
 
 Want a controller gaming experience without any controller?  
 This game will transform your traditional keyboard into a controller!! *[very_loud_cheer.mp3 intensifies]*  
@@ -21,8 +22,6 @@ First, you have to [hold your keyboard in a controller style](https://i.imgur.co
 This game support both with- and without- numpad keyboard.  
 *Hey, but what if I want to play this on notebook?*  
 No worry! Just [hold your notebook in a controller style](https://i.imgur.com/UgdrKvz.png)!!  
-
-You also can play this in normal keyboard position, but trust me, this way more funier!
 
 Once you enter the game, you will control a spaceship. (yes, that cute little triangle)  
 Your job is to shoot those green aliens and do not let them reach the bottom of the screen. Simple, right?  
