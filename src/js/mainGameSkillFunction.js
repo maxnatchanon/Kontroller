@@ -1,4 +1,4 @@
-// Check if player pressed move button
+// Check if player pressed switch skill button
 MainGame.prototype.checkSkillSwitch = function() {
     if (this.skillSwitchBtnDown === null) {
         if (this.switchSkillUp.isDown) {
@@ -48,7 +48,7 @@ MainGame.prototype.cooldownSkill = function() {
 // Check if player use skill
 MainGame.prototype.checkSkillPress = function() {
     if (this.skillPressBtnDown === null) {
-        for (let btnIdx = 0; btnIdx < 3; btnIdx++) {
+        for (let btnIdx = 0; btnIdx < 5; btnIdx++) {
             if (this.skillPress[btnIdx].isDown) {
                 this.useSkill();
                 this.skillPressBtnDown = this.skillPress[0];
