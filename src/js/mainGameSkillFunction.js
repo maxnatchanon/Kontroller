@@ -5,14 +5,14 @@ MainGame.prototype.checkSkillSwitch = function() {
             this.switchSkill(true);
             this.skillSwitchBtnDown = this.switchSkillUp;
         }
-        else if (this.switchSkillDown[0].isDown) {
-            this.switchSkill(false);
-            this.skillSwitchBtnDown = this.switchSkillDown[0];
-        }
-        else if (this.switchSkillDown[1].isDown) {
-            this.switchSkill(false);
-            this.skillSwitchBtnDown = this.switchSkillDown[1];
-        }
+        else {
+            for (let btnIdx = 0; btnIdx < this.switchSkillDown.length; btnIdx++) {
+                if (this.switchSkillDown[btnIdx].isDown) {
+                    this.switchSkill(false);
+                    this.skillSwitchBtnDown = this.switchSkillDown[btnIdx];
+                }
+            }
+        } 
     }
     else {
         if (!this.skillSwitchBtnDown.isDown) {
@@ -48,7 +48,7 @@ MainGame.prototype.cooldownSkill = function() {
 // Check if player use skill
 MainGame.prototype.checkSkillPress = function() {
     if (this.skillPressBtnDown === null) {
-        for (let btnIdx = 0; btnIdx < 5; btnIdx++) {
+        for (let btnIdx = 0; btnIdx < this.skillPress.length; btnIdx++) {
             if (this.skillPress[btnIdx].isDown) {
                 this.useSkill();
                 this.skillPressBtnDown = this.skillPress[0];
