@@ -39,7 +39,7 @@ class StartScreen extends Phaser.Scene {
                 game.state = 1;
                 game.tick = 0;
             }
-            else if (game.state === 2 && (event.keyCode === 50 || event.keyCode === 191)) {
+            else if (game.state === 2 && ([50, 191, 98, 99, 51].includes(event.keyCode))) {
                 game.state = 3;
                 game.tick = 0;
             }
