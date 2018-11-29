@@ -174,13 +174,18 @@ class MainGame extends Phaser.Scene {
 		this.left = this.input.keyboard.addKey(16);
 		this.right = this.input.keyboard.addKey(90)
 		this.fire = [this.input.keyboard.addKey(50),
-					this.input.keyboard.addKey(191)];
+					this.input.keyboard.addKey(191),
+					this.input.keyboard.addKey(98),
+					this.input.keyboard.addKey(99),
+					this.input.keyboard.addKey(51)];
 		this.switchSkillUp = this.input.keyboard.addKey(192);
 		this.switchSkillDown = [this.input.keyboard.addKey(109),
 								this.input.keyboard.addKey(8)];
 		this.skillPress = [this.input.keyboard.addKey(54),
 							this.input.keyboard.addKey(222),
-							this.input.keyboard.addKey(65)];
+							this.input.keyboard.addKey(65),
+							this.input.keyboard.addKey(102),
+							this.input.keyboard.addKey(107)];
 		this.skillSwitchBtnDown = null;
 		this.skillPressBtnDown = null;
 		
