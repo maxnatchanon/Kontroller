@@ -13,24 +13,24 @@ class StartScreen extends Phaser.Scene {
         this.load.image('star', 'star.png');
         this.load.audio('startLoop', ['../mainGame/sound/endLoop.mp3']);
         this.load.image('tutorial', 'tutorial.png');
-        this.load.image('tutorialRemapped', 'tutorial-remapped.png');
+        this.load.image('tutorialRemapped', 'tutorialRemapped.png');
         this.load.image('fireToContinue', 'fireToContinue.png');
 
         this.load.image('remapKeysText', 'remapKeysText.png');
         this.load.image('pressToRemapText', 'mapPressText.png');
 
-        this.load.image('remapLR_KB', 'remap-lr.png');
-        this.load.image('remapFire_KB', 'remap-fire.png');
-        this.load.image('remapSkill_KB', 'remap-skill.png');
-        this.load.image('remapSkillSWL_KB', 'remap-skillswl.png');
-        this.load.image('remapSkillSWR_KB', 'remap-skillswr.png');
+        this.load.image('remapLR_KB', 'remapLR.png');
+        this.load.image('remapFire_KB', 'remapFire.png');
+        this.load.image('remapSkill_KB', 'remapSkill.png');
+        this.load.image('remapSkillSWL_KB', 'remapSkillSWL.png');
+        this.load.image('remapSkillSWR_KB', 'remapSkillSWR.png');
 
-        this.load.image('remapL_Text', 'maptext-left.png');
-        this.load.image('remapR_Text', 'maptext-right.png');
-        this.load.image('remapFire_Text', 'maptext-fire.png');
-        this.load.image('remapSkill_Text', 'maptext-skill.png');
-        this.load.image('remapSkillSWL_Text', 'maptext-skillSwitchL.png');
-        this.load.image('remapSkillSWR_Text', 'maptext-skillSwitchR.png');
+        this.load.image('remapL_Text', 'mapTextLeft.png');
+        this.load.image('remapR_Text', 'mapTextRight.png');
+        this.load.image('remapFire_Text', 'mapTextFire.png');
+        this.load.image('remapSkill_Text', 'mapTextSkill.png');
+        this.load.image('remapSkillSWL_Text', 'mapTextSkillSwitchL.png');
+        this.load.image('remapSkillSWR_Text', 'mapTextSkillSwitchR.png');
     }
 
 	create() {
@@ -77,7 +77,7 @@ class StartScreen extends Phaser.Scene {
                     game.remappingKey = 0;
                     game.state = 3;
                     game.tick = 0;
-                    game.remapKB.setTexture('remapL_KB');
+                    game.remapKB.setTexture('remapLR_KB');
                     game.remapButtonText.setTexture('remapL_Text');
                 }
                 else if (!game.remapped && [50, 191, 98, 99, 51].includes(event.keyCode)) {
