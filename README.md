@@ -1,7 +1,8 @@
 # Kontroller
 ![](https://i.imgur.com/prM2c50.png)
 **GitHub Game Off 2018 - Hybrid**  
-Project Page : [https://maxnatchanon.itch.io/kontroller](https://maxnatchanon.itch.io/kontroller)
+Project Page : [https://maxnatchanon.itch.io/kontroller](https://maxnatchanon.itch.io/kontroller)  
+Jam Entry Page : [https://itch.io/jam/game-off-2018/rate/335255](https://itch.io/jam/game-off-2018/rate/335255)
 
 Want a controller gaming experience without any controller?  
 This game will transform your traditional keyboard into a controller!! *[very_loud_cheer.mp3 intensifies]*  
