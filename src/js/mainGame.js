@@ -4,6 +4,12 @@ class MainGame extends Phaser.Scene {
 		super({key:"mainGame"});
 	}
 
+	init(data) {
+		this.remapped = data.remapped;
+		this.remapKeys = data.remapKeys;
+		console.log(data);
+	}
+
 	preload() {
 		this.load.baseURL = 'assets/mainGame/img/';
 		this.load.image('player', 'player.png');
@@ -171,24 +177,34 @@ class MainGame extends Phaser.Scene {
 		this.blueShield = this.add.image(230, 380, 'blueShield').setOrigin(0, 0).setDepth(1).setAlpha(0);
 
 		// Input
-		this.left = this.input.keyboard.addKey(16);
-		this.right = this.input.keyboard.addKey(90)
-		this.fire = [this.input.keyboard.addKey(50),
-					this.input.keyboard.addKey(191),
-					this.input.keyboard.addKey(98),
-					this.input.keyboard.addKey(99),
-					this.input.keyboard.addKey(51)];
-		this.switchSkillUp = this.input.keyboard.addKey(192);
-		this.switchSkillDown = [this.input.keyboard.addKey(109),
-								this.input.keyboard.addKey(8)];
-		this.skillPress = [this.input.keyboard.addKey(54),
-							this.input.keyboard.addKey(222),
-							this.input.keyboard.addKey(65),
-							this.input.keyboard.addKey(102),
-							this.input.keyboard.addKey(107)];
+		if (!this.remapped) {
+			this.left = this.input.keyboard.addKey(16);
+			this.right = this.input.keyboard.addKey(90)
+			this.fire = [this.input.keyboard.addKey(50),
+						this.input.keyboard.addKey(191),
+						this.input.keyboard.addKey(98),
+						this.input.keyboard.addKey(99),
+						this.input.keyboard.addKey(51)];
+			this.switchSkillUp = this.input.keyboard.addKey(192);
+			this.switchSkillDown = [this.input.keyboard.addKey(109),
+									this.input.keyboard.addKey(8)];
+			this.skillPress = [this.input.keyboard.addKey(54),
+								this.input.keyboard.addKey(222),
+								this.input.keyboard.addKey(65),
+								this.input.keyboard.addKey(102),
+								this.input.keyboard.addKey(107)];
+		}
+		else {
+			this.left = this.input.keyboard.addKey(this.remapKeys.moveLeft);
+			this.right = this.input.keyboard.addKey(this.remapKeys.moveRight)
+			this.fire = [this.input.keyboard.addKey(this.remapKeys.fire)];
+			this.switchSkillUp = this.input.keyboard.addKey(this.remapKeys.switchSkillUp);
+			this.switchSkillDown = [this.input.keyboard.addKey(this.remapKeys.switchSkillDown)];
+			this.skillPress = [this.input.keyboard.addKey(this.remapKeys.skill)];
+		}
 		this.skillSwitchBtnDown = null;
 		this.skillPressBtnDown = null;
-		
+
 		// Game status
 		this.isPlaying = true;	
 		
