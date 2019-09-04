@@ -4,8 +4,8 @@
 Project Page : [https://maxnatchanon.itch.io/kontroller](https://maxnatchanon.itch.io/kontroller)  
 Jam Entry Page : [https://itch.io/jam/game-off-2018/rate/335255](https://itch.io/jam/game-off-2018/rate/335255)
 
-Want a controller gaming experience without any controller?  
-This game will transform your traditional keyboard into a controller!! *[very_loud_cheer.mp3 intensifies]*  
+>Want a controller-gaming experience without any controller?  
+>This game will transform your traditional keyboard into a controller!! *[very_loud_cheer.mp3 intensifies]*  
 
 ## How to run
 
@@ -24,12 +24,15 @@ This game support both with- and without- numpad keyboard.
 *Hey, but what if I want to play this on notebook?*  
 No worry! Just [hold your notebook in a controller style](https://i.imgur.com/UgdrKvz.png)!!  
 
-Once you enter the game, you will control a spaceship. (yes, that cute little triangle)  
+In this game, you controls a spaceship. (yes, that cute little triangle)  
 Your job is to shoot those green aliens and do not let them reach the bottom of the screen. Simple, right?  
-You have 3 skills to help you. The game will get harder and harder as your score increase.  
+You have 3 skills to help you. The game will get harder and harder as your score goes up.  
+
+## Jam result
+![](https://i.imgur.com/hoYFFNt.png)
 
 ## Credit
-Thanks [freesound.org](https://freesound.org) for the awesome sound effects and bgms.
+Thanks [freesound.org](https://freesound.org) for these awesome sound effects and bgms.
 - [Awesomesauce](https://freesound.org/people/eardeer/sounds/402955/) by eardeer
 - [digital loop](https://freesound.org/people/RichHeard/sounds/444825/) by RichHeard
 - [Scifi Shoot or Bass](https://freesound.org/people/Quonux/sounds/166418/) by Quonux
